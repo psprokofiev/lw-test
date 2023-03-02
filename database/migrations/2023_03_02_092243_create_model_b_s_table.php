@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::connection('sqlite2')->create('model_b_s', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->unsignedBigInteger('a_id');
             $table->timestamps();
         });
     }
