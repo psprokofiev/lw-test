@@ -1,0 +1,32 @@
+version: '3.5'
+
+services:
+  app:
+    container_name: livewire-app
+    user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    environment:
+      FPM_USER: www
+      FPM_GROUP: www
+    volumes:
+      - .:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
+
+  nginx:
+    container_name: livewire-nginx
+    image: nginx:1.23.3-alpine
+    ports:
+      - 8081:80
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
