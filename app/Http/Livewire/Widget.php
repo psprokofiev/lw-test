@@ -31,7 +31,9 @@ class Widget extends Component
 
     public function load(int $id)
     {
-        $this->children = ModelB::query()->where('a_id', $id)->get();
+        $this->children = ModelB::query()->where('a_id', $id)
+            ->with(['a', 'c'])
+            ->get();
     }
 
     public function render()

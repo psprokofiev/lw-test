@@ -12,7 +12,9 @@ class Card extends Component
 
     public function render()
     {
-        $this->model = ModelA::query()->find(3);
+        $this->model = ModelA::query()
+            ->with(['b', 'd'])
+            ->find(3);
 
         return view('livewire.card')
             ->layout('welcome');
